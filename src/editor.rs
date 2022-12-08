@@ -30,7 +30,10 @@ impl Editor {
     }
 
     fn refresh_screen(&self) -> Result<(), std::io::Error>{
-        print!("{}", termion::clear::All);
+        print!("{}{}", termion::clear::All, termion::cursor::Goto(1,1));
+        if self.should_quit {
+            println!("Goodbye.\r");
+        }
         io::stdout().flush()
     }
 
@@ -53,5 +56,6 @@ impl Editor {
 }
 
 fn die(e: &std::io::Error){
+    print!("{}", termion::clear::All)
     panic!("{}",e);
 }
