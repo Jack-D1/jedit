@@ -1,4 +1,4 @@
-use std::io::{self, stdout};
+use std::io::{self, stdout, Write};
 use termion::event::Key;
 use termion::input::TermRead;
 use termion::raw::IntoRawMode;
@@ -30,7 +30,7 @@ impl Editor {
     }
 
     fn refresh_screen(&self) -> Result<(), std::io::Error>{
-        print!("\x1b[2J");
+        print!("{}", termion::clear::All);
         io::stdout().flush()
     }
 
