@@ -63,7 +63,10 @@ impl Editor {
             println!("Goodbye.\r");
         } else {
             self.draw_rows();
-            Terminal::cursor_position(&self.cursor_position);
+            Terminal::cursor_position(&Position {
+                 x: self.cursor_position.x.saturating_sub(self.offset.x), 
+                 y: self.cursor_position.y.saturating_sub(self.offset.y) 
+                });
         }
         Terminal::cursor_show();
         Terminal::flush()
@@ -107,7 +110,7 @@ impl Editor {
     fn move_cursor(&mut self, key: Key){
         let Position {mut y, mut x} = self.cursor_position;
         let size = self.terminal.size();
-        let height = size.height.saturating_sub(1) as usize;
+        let height = self.document.len();
         let width = size.width.saturating_sub(1) as usize; 
         match key{
             Key::Up => y = y.saturating_sub(1),
