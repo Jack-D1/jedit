@@ -3,6 +3,7 @@ use std::io::{self, stdout, Write};
 use termion::event::Key;
 use termion::input::TermRead;
 use termion::raw::{IntoRawMode, RawTerminal};
+use termion::color;
 
 pub struct Size {
     pub width: u16,
@@ -66,5 +67,13 @@ impl Terminal{
 
     pub fn clear_current_line(){
         print!("{}", termion::clear::CurrentLine);
+    }
+
+    pub fn set_bg_color(color: color::Rgb){
+        print!("{}", color::Bg(color));
+    }
+
+    pub fn reset_bg_color(){
+        print!("{}", color::Bg(color::Reset));
     }
 }
