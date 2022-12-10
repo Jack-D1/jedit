@@ -63,11 +63,10 @@ impl Editor {
     pub fn default() -> Self {
         let args: Vec<String> = env::args().collect();
         let mut initial_status = String::from("HELP: Ctrl-S = save | Ctrl-Q = quit");
-        let document = if args.len() > 1{
-            let file_name = &args[1];
-            let doc = Document::open(&file_name);
-            if doc.is_ok(){
-                doc.unwrap()
+        let document = if let Some(file_name) = args.get(1){
+            let doc = Document::open(file_name);
+            if let Ok(doc) = doc{
+                doc
             }else {
                 initial_status = format!("ERR: Could not open file {}", file_name);
                 Document::default()
@@ -313,7 +312,7 @@ impl Editor {
         let start = self.offset.x;
         let end = self.offset.x.saturating_add(width);
         let row = row.render(start, end);
-        println!("{}\r", row)
+        println!("{}\r", row);
     }
 
     #[allow(clippy::integer_division, clippy::integer_arithmetic)]
