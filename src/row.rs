@@ -241,7 +241,7 @@ impl Row {
             if opts.numbers() {
                 if (c.is_ascii_digit() 
                 && (prev_is_seperator || *previous_highlight == highlighting::Type::Number))
-                || (c == &'.' && *previous_highlight == highlighting::Type::Number)
+                || (*c == '.' && *previous_highlight == highlighting::Type::Number)
                 {
                     highlighting.push(highlighting::Type::Number);
                 }else {
