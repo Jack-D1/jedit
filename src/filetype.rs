@@ -15,3 +15,9 @@ impl Default for FileType {
         }
     }
 }
+
+impl FileType {
+    pub fn name(&self) -> String {
+        self.name.clone()
+    }
+}
